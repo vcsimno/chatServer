@@ -1,0 +1,78 @@
+server:
+  port: 9556
+
+spring:
+  application:
+    name: chatServer
+
+  datasource: #使用了mybatis-plus的加密，密匙传递在启动参数
+    #mybatis-plus多数据源框架
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: mpw:7laS+xg01nafXamb1hbB7aj2fJNh1XtJrEfB1NBSzcRmbSgEgYnvDAk/ByQKQo+nDI+7XyveDpLTuahiN50v4oxlvij03ElfAN49cONLf1oZq689pcOYc5xI+NX7AOiw
+          username: mpw:yI/mA8Hb9VUmJG3NvAfB9Q==
+          password: mpw:QORWA8+Z/o7JpkhfEid9Eg==
+            #driver-class-name: com.mysql.cj.jdbc.Driver
+            #url: mpw:gYJftlCuCuPNRo7a8s1ss4HPulUcM55OHIz0ZsMys2K2JK5JwD5DuZiXP/72h3fWcmHY2i30PYs7IAK6+uZyV1SHrKR0H1U+EYlwZ2SUlIQ=
+            #username: mpw:Kbcyf7OeKTrl3Q0bkAYvhg==
+            #password: mpw:gt8tBgGreDiQbASep6zUSg==
+            #slave_1:
+            #  url: mpw:dNjT0C8R2vh972whSGklOyqz7hR9ntRUU58MOiSftOelxMKOCB2rquB+qAZ5KF8IJAV7bVvXjNKSt6qpsnKaV6nz6jV0A27NhwchZZroWgQ=
+            #  username: mpw:3IAJ/lzGvlG5+CSXhe2S2g==
+            #  password: mpw:3IAJ/lzGvlG5+CSXhe2S2g==
+            #  driver-class-name: com.mysql.jdbc.Driver
+            #slave_2:
+            #  url: mpw:dNjT0C8R2vh972whSGklO69WmcQZH494voJk38q/JmfDVhJi8IkUYln5KNoyZqSOKZXC0FiZKBGg46AYzRk1lRv6ZdJdSRi/hSoxPoph5VI=
+            #  username: mpw:3IAJ/lzGvlG5+CSXhe2S2g==
+            #  password: mpw:3IAJ/lzGvlG5+CSXhe2S2g==
+          #  driver-class-name: com.mysql.jdbc.Driver
+
+  redis:
+    port: 6379
+    host: 43.139.150.120
+    password: 960606
+    connect-timeout: 1000
+    lettuce:
+      pool:
+        enabled: on
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: del_status
+      logic-not-delete-value: 0
+  type-aliases-package: com.yize.chatserver.domain.pojo  #实体类别名
+  mapper-locations: classpath:mapper/*.xml   # 扫描的xml
+  configuration:
+    map-underscore-to-camel-case: true  #开启驼峰命名
+    cache-enabled: false
+  check-config-location: true # 检查xml是否存在
+
+file:
+  upload-path: /root
+
+jwt:
+  tokenHead: Bearer
+  tokenHeader: Authorization
+  keepDay: 7
+  key: yizeLink
+
+
+aliyun:
+  oss:
+    file:
+      endpoint: 123456
+      keyid: 123456
+      keysecret: 123456
+      bucketname: 123456
+      filehost: 123456
+  sms:
+    access-key-id: LTAI5tC1gBRW31KSfJiAd2J7
+    access-key-secret: JpqvsIouhzdpUnCd5y3hbDgi0K0Nmn
+    cool-down: 60
+    signName: 阿里云短信测试
