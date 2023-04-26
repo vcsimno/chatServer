@@ -1,0 +1,33 @@
+rocketmq:
+  # rocketmq的NameServer地址
+  name-server: 43.139.150.120:9876
+
+  # 生产者端需要配置
+  producer:
+    # 必须指定一个group
+    group: default
+    send-message-timeout: 6000
+    access-key: rocketmq2
+    secret-key: 12345678
+    namespace: 1A
+  consumer:
+    # 必须指定一个group
+    group: default
+    send-message-timeout: 6000
+    access-key: rocketmq2
+    secret-key: 12345678
+    namespace: 1A
+###信息服务器配置
+chatServer:
+  #服务器名
+  server-name: 西凉国
+  #最多接收连接数
+  max-connected: 1000
+  #服务器标识
+  server-id: 1A
+  # ip 地址
+  server-ip: 43.139.150.120
+  # 端口
+  server-port: 9556
+  # 链接接口
+  server-path: cs_server

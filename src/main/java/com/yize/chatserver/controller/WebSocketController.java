@@ -1,6 +1,13 @@
 package com.yize.chatserver.controller;
 
 
+import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.yize.chatserver.packet.net.Packer;
+import com.yize.chatserver.packet.vo.PacketVo;
+import com.yize.chatserver.packet.vo.SignVo;
+import com.yize.chatserver.utils.AesEncryptUtils;
+import com.yize.chatserver.utils.RsaUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.DependsOn;
@@ -21,8 +28,8 @@ public class WebSocketController {
     private  final Logger logger = LogManager.getLogger(WebSocketController.class);
 
     @OnOpen
-    public void onOpen () {
-
+    public void onOpen (Session session) {
+        System.out.println("链接 session = " + session);
     }
 
 
@@ -35,6 +42,41 @@ public class WebSocketController {
 
     @OnMessage
     public void onMessage (String message, Session session) {
+        
+        System.out.println("message = " + message);
+
+        try{
+            String decrypt = AesEncryptUtils.decrypt(message);
+            PacketVo packetVo = JSONObject.parseObject(decrypt, PacketVo.class);
+
+            System.out.println("packetVo = " + packetVo);
+
+            String sign = RsaUtils.decrypt(packetVo.getSign());
+            SignVo signVo = JSONObject.parseObject(sign, SignVo.class);
+
+            System.out.println("signVo = " + signVo);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
+
+
+        JSONObject data = new JSONObject();
+        data.put("uid", 123456L);
+        data.put("userName", "administrator");
+        SignVo signVo = new SignVo();
+        signVo.setIv("IV123456");
+        signVo.setTimeStamp(System.currentTimeMillis());
+        signVo.setRandomString(RandomUtil.randomString(6));
+
+        try{
+            String pack = Packer.Pack(data, signVo);
+            session.getBasicRemote().sendText(pack);
+        }catch (IOException e){
+            System.out.println("e = " + e.getMessage());
+        }
+
 
     }
 

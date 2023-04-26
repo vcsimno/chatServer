@@ -2,6 +2,8 @@ server:
   port: 9556
 
 spring:
+
+
   application:
     name: chatServer
 
@@ -39,6 +41,9 @@ spring:
     lettuce:
       pool:
         enabled: on
+  config:
+    import: conf.yml
+
 
 
 mybatis-plus:
