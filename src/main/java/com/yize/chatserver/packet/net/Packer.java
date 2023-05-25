@@ -1,6 +1,6 @@
 package com.yize.chatserver.packet.net;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.yize.chatserver.exception.YiException;
 import com.yize.chatserver.packet.vo.PacketVo;
 import com.yize.chatserver.packet.vo.SignVo;

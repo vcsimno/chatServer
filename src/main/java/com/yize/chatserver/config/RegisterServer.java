@@ -36,4 +36,17 @@ public class RegisterServer {
         object.put("ping", 0);
         redisUtils.set(RedisConstants.keys.chatServer + serverId, object.toJSONString());
     }
+
+    /**
+     * 更新服务器在线状态
+     */
+    public void update(){
+        RedisUtilsService.RedisUtils redisUtils = RedisUtilsService.instance(RedisConstants.ONLINE);
+        String cache = redisUtils.get(RedisConstants.keys.chatServer + serverId);
+
+        JSONObject object = JSONObject.parseObject(cache);
+        String online = object.getString("online");
+        object.put("online", Integer.parseInt(online) + 1);
+        redisUtils.set(RedisConstants.keys.chatServer + serverId, object.toJSONString());
+    }
 }

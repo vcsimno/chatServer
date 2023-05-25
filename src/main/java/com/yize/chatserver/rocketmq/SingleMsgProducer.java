@@ -6,7 +6,6 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,21 +26,21 @@ public class SingleMsgProducer {
     private RocketMQTemplate rocketMQTemplate;
 
     /**发送异步信息*/
-    public SendResult send(Topic topic, JSONObject payload){
+    public SendResult send(String topic, JSONObject payload){
         return doSend(topic, payload, rocketMQTemplate.getProducer().getNamespace());
     }
 
     /**发送异步信息*/
-    public SendResult send(Topic topic, JSONObject payload, String nameSpace){
+    public SendResult send(String topic, JSONObject payload, String nameSpace){
         return doSend(topic, payload, nameSpace);
     }
 
-    private SendResult doSend(Topic topic, JSONObject payload, String nameSpace){
+    private SendResult doSend(String topic, JSONObject payload, String nameSpace){
         try {
             DefaultMQProducer producer = rocketMQTemplate.getProducer();
             producer.setNamespace(nameSpace);
             rocketMQTemplate.setProducer(producer);
-            return rocketMQTemplate.syncSend(topic.toString(), payload.toJSONString());
+            return rocketMQTemplate.syncSend(topic, payload.toJSONString());
         }catch (Exception e){
             SendResult sendResult = new SendResult();
             sendResult.setSendStatus(SendStatus.FLUSH_SLAVE_TIMEOUT);
