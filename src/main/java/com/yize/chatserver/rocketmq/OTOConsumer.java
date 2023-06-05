@@ -68,7 +68,7 @@ public class OTOConsumer implements RocketMQListener<String> {
                     while (iterator.hasNext()){
                         String next = iterator.next();
                         JSONObject object = JSONObject.parseObject(next);
-                        String targetUid = object.getString("targetUid");
+                        String targetUid = object.getString("receiver");
                         Session session = wssHub.get(targetUid);
                         if(session != null){
                             //转发了一条申请加为好友的信息

@@ -45,6 +45,7 @@ public class WebSocketController {
         try{
             try {
                 String decrypt = AesEncryptUtils.decrypt(message);
+                System.out.println("WebSocketController ---> packet = " + decrypt);
                 PacketVo packetVo = JSONObject.parseObject(decrypt, PacketVo.class);
                 String sign = RsaUtils.decrypt(packetVo.getSign());
                 SignVo signVo = JSONObject.parseObject(sign, SignVo.class);
